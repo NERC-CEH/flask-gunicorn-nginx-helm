@@ -10,6 +10,8 @@ spec:
   - protocol: TCP
     port: 80
     name: http
+    nodePort: 30300
   - protocol: TCP
     port: 443
     name: https
+    nodePort: 30301
