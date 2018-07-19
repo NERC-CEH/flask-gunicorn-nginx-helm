@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-nginx
+  labels:
+    app: hello
+spec:
+  selector:
+    matchLabels:
+      app: hello-nginx
+  template:
+    metadata:
+      labels:
+        app: hello-nginx
+    spec:
+      volumes:
+      - name: secret-tls
+        secret:
+          secretName: tls-certificate
+      - name: secret-dhparam
+        secret:
+          secretName: tls-dhparam
+      containers:
+      - name: hello-nginx
+        image: hello-nginx:v1
+        ports:
+          - containerPort: 80
+          - containerPort: 443
+        volumeMounts:
+        - mountPath: /etc/nginx/ssl
+          name: secret-tls
+        - mountPath: /etc/nginx/dhparam
+          name: secret-dhparam

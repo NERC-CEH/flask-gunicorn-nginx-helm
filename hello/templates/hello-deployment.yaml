@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+  labels:
+    app: hello
+spec:
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+      - name: hello
+        image: hello:v1
+        command: ["gunicorn", "-w", "4", "-b", "0.0.0.0:8080", "hello"]
+        ports:
+          - containerPort: 8080
